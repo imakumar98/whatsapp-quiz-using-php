@@ -4,11 +4,12 @@
 
 	require_once './includes/functions.php';
 
-	session_start();
+	$arr = get_question_array(24,28,3);
 
-	//unset($_SESSION['user_array']);
+	print_r($arr);
 
-	print_r($_SESSION['user_array']);
+
+
 
 
 

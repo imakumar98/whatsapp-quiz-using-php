@@ -1,10 +1,19 @@
 <?php
     require_once './includes/init.php';
 
-    if(!isset($_COOKIE['name'])){
+    if(!isset($_COOKIE['friend_name'])){
         redirect(APP_URL);
+    }
+
+
+    if(!isset($_GET['uid'])){
+        die("Invalid URL");
     }else{
-        //echo 'Hello '.$_COOKIE['name'];
+        $uid = escape_string($_GET['uid']);
+
+        if(!is_user_exist($uid)){
+            die("User not exist");
+        }
     }
 ?>
 <!doctype html>
@@ -38,8 +47,8 @@
         <div id="question-wrapper">
             <div class="container">
                 <div class="row" id="main-questions-wrapper">
-                    <?php //get_questions_list(); ?>
-                    <div class="question col-md-8 offset-md-2 inactive-question" id="question" >
+                    <?php get_user_quiz_questions($uid); ?>
+                    <!-- <div class="question col-md-8 offset-md-2 inactive-question" id="question" >
                         <div class="text-center challenge-completed-div">
                             <h2>Your Challenge is Ready</h2>
                             <h5>Share this link with your friends</h5>
@@ -47,7 +56,7 @@
                             <button class="btn" id="copy-btn" onclick="copyText()">COPY</button>
                         </div>
                         
-                    </div>
+                    </div> -->
                 </div>
             </div>
             

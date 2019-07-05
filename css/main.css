@@ -26,6 +26,10 @@ header h5 a:hover{
 	margin-top:50px;
 }
 
+#enter-form-wrapper h4, #enter-form-wrapper h5{
+	color: #50596c;
+}
+
 #start-button{
 	background:rgb(153, 0, 59) !important;
 	border:none;
@@ -53,4 +57,28 @@ header h5 a:hover{
 
 .option p{
 	font-size:18px;
+}
+
+
+
+
+.challenge-completed-div h2{
+	color:#99003b;
+}
+
+.challenge-completed-div h5{
+	color:#50596c;
+}
+
+#copy-btn{
+	background:rgb(153, 0, 59) !important;
+	border:none;
+	color:#FFF;
+	margin-top:15px;
+}
+
+.my-btn{
+	background:rgb(153, 0, 59) !important;
+	border:none;
+	color:#FFF;
 }
