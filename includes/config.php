@@ -1,0 +1,14 @@
+<?php
+
+	//DEFINE ALL THE CONFIGURATION SETTINGS
+	DEFINE('HOST', 'localhost');
+	DEFINE('USERNAME', 'root');
+	DEFINE('PASSWORD','');
+	DEFINE('DB_NAME','quiz');
+	DEFINE('EMAIL', '');
+	DEFINE('APP_URL', 'http://localhost/quiz');
+	DEFINE('MIN_QUESTION_ID','24');
+	DEFINE('MAX_QUESTION_ID','28');
+	DEFINE('NUMBER_OF_QUESTIONS_TO_ASK',3);
+
+?>

@@ -1,0 +1,56 @@
+header{
+	background: rgb(153, 0, 59) !important;
+	color:#FFF;
+	padding:10px;
+	margin-bottom: 50px;
+}
+
+header h5 a{
+	color:#FFF;
+}
+
+header h5 a:hover{
+	color:#FFF;
+	text-decoration:none;
+}
+
+#enter-form{
+	padding:40px 60px 40px 50px;
+	border-radius: 10px;
+	background: #f8f9fa;
+	border: 2px solid #50596c;
+
+}
+
+#enter-form-wrapper{
+	margin-top:50px;
+}
+
+#start-button{
+	background:rgb(153, 0, 59) !important;
+	border:none;
+}
+
+.question{
+	border: 2px solid #50596c;
+	padding:50px;
+	border-radius:5px;
+	background: #f8f9fa;
+}
+
+.question .question-text{
+	font-weight: 500;
+	font-size:20px;
+	color: #505969;
+	
+}
+
+.option{
+	padding:10px 20px 10px 20px;
+	border:1px solid #cbcbcb;
+	margin-top:20px;
+}
+
+.option p{
+	font-size:18px;
+}
