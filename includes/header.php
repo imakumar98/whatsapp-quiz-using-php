@@ -1,7 +1,7 @@
 <header>
 
-	<h5>
-		<a href="http://localhost/quiz">2019 Friendship Dare</a>
+	<h5 class="text-center">
+		<a href="http://localhost/quiz"><img src="./images/icon.png" class="img-fluid" /></a>
 	</h5>
 
 

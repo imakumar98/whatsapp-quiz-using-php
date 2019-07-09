@@ -1,8 +1,8 @@
 header{
-	background: rgb(153, 0, 59) !important;
-	color:#FFF;
+	
+	color:red;
 	padding:10px;
-	margin-bottom: 50px;
+	
 }
 
 header h5 a{
@@ -31,7 +31,7 @@ header h5 a:hover{
 }
 
 #start-button{
-	background:rgb(153, 0, 59) !important;
+	background:#D3312D;
 	border:none;
 }
 
@@ -50,8 +50,9 @@ header h5 a:hover{
 }
 
 .option{
-	padding:10px 20px 10px 20px;
+	/*padding:10px 20px 10px 20px;*/
 	border:1px solid #cbcbcb;
+	background: #FFF;
 	margin-top:20px;
 }
 
@@ -63,7 +64,8 @@ header h5 a:hover{
 
 
 .challenge-completed-div h2{
-	color:#99003b;
+	color:#D3312D;
+	font-weight: bold;
 }
 
 .challenge-completed-div h5{
@@ -71,14 +73,36 @@ header h5 a:hover{
 }
 
 #copy-btn{
-	background:rgb(153, 0, 59) !important;
+	background:#D3312D;
 	border:none;
 	color:#FFF;
 	margin-top:15px;
 }
 
 .my-btn{
-	background:rgb(153, 0, 59) !important;
+	background:#D3312D
 	border:none;
 	color:#FFF;
+}
+
+.active-question{
+    display:block;
+}
+
+.inactive-question{
+    display:none;
+}
+
+.social-media-button{
+    color:#FFF;
+    text-decoration:none;
+    padding:8px;
+    border-radius: 3px;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+.social-media-button:hover{
+    text-decoration:none;
+    color:#FFF;
 }

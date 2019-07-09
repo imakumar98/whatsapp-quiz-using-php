@@ -1,36 +1,28 @@
 <?php
     require_once './includes/init.php';
 
-    if(!isset($_COOKIE['name'])){
-        redirect(APP_URL);
-    }else{
-        //echo 'Hello '.$_COOKIE['name'];
-    }
+    // if(!isset($_COOKIE['name'])){
+    //     redirect(APP_URL);
+    // }
+
+    
+
+
 ?>
 <!doctype html>
 <html class="no-js" lang="">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>2019 Friendship Dare</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
-        <link rel="stylesheet" href="css/main.css">
-        <style>
+        <?php require_once './includes/meta-tags.php'; ?>
+        <script src="./js/app-url.js"></script>
+        <script>
             
-            .active-question{
-                display:block;
+            if(localStorage.user_id){
+                window.location.href= APP_URL + '/share.php';
 
             }
-
-            .inactive-question{
-                display:none;
-            }
-
-
-        </style>
+    
+        </script>
+        
     </head>
     <body>
         <?php require_once('./includes/header.php'); ?>
@@ -38,16 +30,8 @@
         <div id="question-wrapper">
             <div class="container">
                 <div class="row" id="main-questions-wrapper">
-                    <?php //get_questions_list(); ?>
-                    <div class="question col-md-8 offset-md-2 inactive-question" id="question" >
-                        <div class="text-center challenge-completed-div">
-                            <h2>Your Challenge is Ready</h2>
-                            <h5>Share this link with your friends</h5>
-                            <textarea class="form-control" id="copy-textarea">https://sfdsdklffidhrlewrwe</textarea>
-                            <button class="btn" id="copy-btn" onclick="copyText()">COPY</button>
-                        </div>
-                        
-                    </div>
+                    <?php get_questions_list(); ?>
+                    
                 </div>
             </div>
             
@@ -61,5 +45,6 @@
         </footer>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <script src="./js/script.js"></script>
+        
     </body>
 </html>

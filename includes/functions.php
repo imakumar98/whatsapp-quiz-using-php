@@ -61,7 +61,7 @@
 	            <div class="options">
 	                <div class="row">
 	                    <div class="col-md-6 col-sm-6 col-xs-6">
-	                        <div class="option" value="1">
+	                        <div class="option option1" value="1">
 	                            <div class="text-center">
 	                                <img class="img-fluid rounded" src="./images/<?php echo $question['option1_pic'] ?>" alt="">    
 	                                <p><?php echo $question['option1'] ?></p> 
@@ -69,7 +69,7 @@
 	                        </div>
 	                    </div>
 	                    <div class="col-md-6 col-sm-6 col-xs-6">
-	                        <div class="option" value="2">
+	                        <div class="option option1" value="2">
 	                            <div class="text-center">
 	                                <img class="img-fluid rounded" src="./images/<?php echo $question['option2_pic'] ?>" alt="">    
 	                                <p><?php echo $question['option2'] ?></p> 
@@ -80,7 +80,7 @@
 	                    	if(!empty($question['option3'])){
 	                    		?>
 									<div class="col-md-6 col-sm-6 col-xs-6">
-			                            <div class="option" value="3">
+			                            <div class="option option1" value="3">
 			                                <div class="text-center">
 			                                    <img class="img-fluid rounded" src="./images/<?php echo $question['option3_pic'] ?>" alt="">    
 			                                    <p><?php echo $question['option3'] ?></p> 
@@ -92,7 +92,7 @@
 	                    	if(!empty($question['option4'])){
 	                    		?>
 									<div class="col-md-6 col-sm-6 col-xs-6">
-			                            <div class="option" value="3">
+			                            <div class="option option1" value="3">
 			                                <div class="text-center">
 			                                    <img class="img-fluid rounded" src="./images/<?php echo $question['option4_pic'] ?>" alt="">    
 			                                    <p><?php echo $question['option4'] ?></p> 
@@ -104,7 +104,7 @@
 	                    	if(!empty($question['option5'])){
 	                    		?>
 									<div class="col-md-6 col-sm-6 col-xs-6">
-			                            <div class="option" value="3">
+			                            <div class="option option1" value="3">
 			                                <div class="text-center">
 			                                    <img class="img-fluid rounded" src="./images/<?php echo $question['option5_pic'] ?>" alt="">    
 			                                    <p><?php echo $question['option5']; ?></p> 
@@ -116,7 +116,7 @@
 	                    	if(!empty($question['option6'])){
 	                    		?>
 									<div class="col-md-6 col-sm-6 col-xs-6">
-			                            <div class="option" value="3">
+			                            <div class="option option1" value="3">
 			                                <div class="text-center">
 			                                    <img class="img-fluid rounded" src="./images/<?php echo $question['option6_pic'] ?>" alt="">    
 			                                    <p><?php echo $question['option6']; ?></p> 
@@ -168,7 +168,142 @@
 
 	}
 
+	//FUNCTION TO CREATE NEW RECORD OF USER FRIEND
+	function create_friend_user($friend_name, $answers, $user_id){
+
+		global $connect;
+
+		$sql = "INSERT INTO user_friends (name,user_id) VALUES ('$friend_name', '$user_id')";
+
+		$result = mysqli_query($connect,$sql);
+
+		if($result){
+
+			$id = mysqli_insert_id($connect);
+
+			$i = 1;
+			foreach ($answers as $question_id => $answer) {
+				
+				$answer_column_name = 'ans'.$i;
+				
+				update_row('user_friends', $answer_column_name, $answer, $id);
+				$i++;
+			}
+			return $id;
+			//return get_score($id);
+
+		}else{
+
+			return false;
+		}
+	}
+
 	//FUNCTION TO CALCULATE QUIZ SCORE AFTER SAVING ANSWERS TO DB
+	function calculate_quiz_score($friend_name, $answers, $user_id){
+
+		global $connect; 
+
+		$sql = "INSERT INTO user_friends (name,user_id) VALUES ('$friend_name', '$user_id')";
+
+		$result = mysqli_query($connect,$sql);
+
+		if($result){
+
+			$id = mysqli_insert_id($connect); //NEW CREATED FRIEND ID
+
+			$i = 1;
+			foreach ($answers as $question_id => $answer) {
+				
+				$answer_column_name = 'ans'.$i;
+				
+				update_row('user_friends', $answer_column_name, $answer, $id);
+				$i++;
+			}
+			return get_user_friend_score($id);
+
+		}else{
+
+			die('User new record creation failed');
+		}
+
+		
+		
+
+	}
+
+	//FUNCTION TO RETURN FRIEND SCORE
+	function get_user_friend_score($friend_id){
+
+		global $connect;
+
+		$score = 0;
+
+		$sql = "SELECT * FROM user_friends WHERE id = '$friend_id'";
+
+		$result = mysqli_query($connect, $sql);
+
+		if(mysqli_num_rows($result)==0){
+			die("Please enter correct ID".$friend_id);
+		}
+
+		$friend = mysqli_fetch_array($result);
+
+		$user_id = $friend['user_id'];
+
+		$sql2 = "SELECT * FROM users WHERE id = '$user_id'";
+
+		$result2 = mysqli_query($connect, $sql2);
+
+		$user = mysqli_fetch_array($result2);
+
+
+		for($i=1; $i<=NUMBER_OF_QUESTIONS_TO_ASK; $i++){
+			$column_name = 'ans'.$i;
+			if($user[$column_name]==$friend[$column_name]){
+				$score++;
+			}
+		}
+
+		return $score;
+	}	
+
+	//FUNCTION TO GET_SCORE
+	function get_score($id){
+
+		global $connect;
+
+		$score = 0;
+
+		$sql = "SELECT * FROM user_friends WHERE user_id = '$id'";
+
+		$result = mysqli_query($connect, $sql);
+
+		if(mysqli_num_rows($result)==0){
+			die("Please enter correct ID".$id);
+		}
+
+		$friend = mysqli_fetch_array($result);
+
+		$user_id = $friend['user_id'];
+
+		$sql2 = "SELECT * FROM users WHERE id = '$user_id'";
+
+		$result2 = mysqli_query($connect, $sql2);
+
+		$user = mysqli_fetch_array($result2);
+
+
+		for($i=1; $i<=NUMBER_OF_QUESTIONS_TO_ASK; $i++){
+			$column_name = 'ans'.$i;
+			if($user[$column_name]==$friend[$column_name]){
+				$score++;
+			}
+		}
+
+		return $score;
+
+
+	}
 
 	//FUNCTION TO UPDATE ROW
 	function update_row($table_name, $column_name, $column_value, $id){
@@ -206,16 +341,20 @@
 
 		$sql = "SELECT * FROM user_friends WHERE user_id = '$id'";
 
+
+
 		$result = mysqli_query($connect, $sql);
 
+
+
 		if(mysqli_num_rows($result)==0){
-			?><tr>No user available yet</tr><?php
+			?><tr><td>No user available yet</td><td>-</td></tr><?php
 		}else{
-			while($user = mysqli_fetch_array($result)){
+			while($user_friend = mysqli_fetch_array($result)){
 				?>
 					<tr>
-	                    <td><?php echo $user['name']; ?></td>
-	                    <td><?php echo get_friend_score($id); ?></td>
+	                    <td><?php echo $user_friend['name']; ?></td>
+	                    <td><?php echo get_user_friend_score($user_friend['id']); ?></td>
 	                </tr>
 			
 				<?php
@@ -223,10 +362,7 @@
 		}
 	}
 
-	//FUNCTION TO GET FRIEND'S SCORE
-	function get_friend_score($id){
-		return 20;
-	}
+	
 
 	//FUNCTION TO GET USER QUIZ QUESTIONS LIST
 	function get_user_quiz_questions($id){
@@ -243,12 +379,16 @@
 
 			$question = mysqli_fetch_array($result);
 
+			$username = get_username($id);
+
+			$question_text = str_replace("you", $username, $question['text']);
+
 			?>
 			<div class="question col-md-8 offset-md-2 inactive-question" id="question" qid="<?php echo $question['id'] ?>">
 	            <div class="text-center">
 	                <p>Question <span style="font-weight:bold; color:rgb(153, 0, 59) !important"><?php echo $i+1; ?></span> of <?php echo count($questions); ?></p>
 	            </div>
-	            <p class="text-center question-text"><?php echo $question['text'] ?></p>
+	            <p class="text-center question-text"><?php echo $question_text; ?></p>
 	            <div class="options">
 	                <div class="row">
 	                    <div class="col-md-6 col-sm-6 col-xs-6">
@@ -353,6 +493,23 @@
 
 
 
+	}
+
+	//FUNCTION TO GET USERNAME FROM ID
+	function get_username($id){
+		global $connect;
+
+		$sql = "SELECT * FROM users WHERE id = '$id' LIMIT 1";
+
+		$result = mysqli_query($connect, $sql);
+
+		if(mysqli_num_rows($result)==0){
+			die("User id not exist to fetch user name");
+		}
+
+		$user = mysqli_fetch_array($result);
+
+		return $user['name'];
 	}
 
 

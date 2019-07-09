@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+	
+
 	//ACTIVE FIRST QUESTION
 	$('#main-questions-wrapper .question').first().removeClass('inactive-question');
 	$('#main-questions-wrapper .question').first().addClass('active-question');
@@ -11,7 +13,7 @@ $(document).ready(function(){
 	localStorage.removeItem('user_answers');
 	localStorage.removeItem('user_friend_answers');
 	
-	$('.option').each(function(){
+	$('.option1').each(function(){
 		$(this).on('click',function(){
 			var qid = $(this).parent().parent().parent().parent().attr('qid');
 			var ans = $(this).attr('value');
@@ -37,7 +39,7 @@ $(document).ready(function(){
 			$(this).parent().parent().parent().parent().next().removeClass('inactive-question');
 			$(this).parent().parent().parent().parent().next().addClass('active-question');
 
-			if(question_answered==3){
+			if(question_answered==NUMBER_OF_QUESTIONS_TO_ASK){
 				var obj = localStorage.user_answers;
 				console.log(obj);
 				
@@ -45,9 +47,13 @@ $(document).ready(function(){
 					url: './includes/process.php',
 					data: 'create_quiz=' + 'true' + '&answers=' + obj,
 					method: 'POST',
+					dataType: 'html',
 					success: function(res){
+						var quiz_id = res;
+						localStorage.user_id = quiz_id;
 						localStorage.removeItem('user_answers');
-						$('#main-questions-wrapper').html(res);
+						window.location.href = APP_URL + '/share.php';
+						
 
 					}
 				});
@@ -84,17 +90,23 @@ $(document).ready(function(){
 			$(this).parent().parent().parent().parent().next().removeClass('inactive-question');
 			$(this).parent().parent().parent().parent().next().addClass('active-question');
 
-			if(question_answered==3){
+			if(question_answered==NUMBER_OF_QUESTIONS_TO_ASK){
 				var obj = localStorage.user_friend_answers;
+				var user_id = $('#main-questions-wrapper').attr('user-id');
 				console.log(obj);
 				
 				$.ajax({
 					url: './includes/process.php',
-					data: 'find_score=' + 'true' + '&answers=' + obj,
+					data: 'find_score=' + 'true' + '&friend_answers=' + obj + '&user_id=' + user_id,
 					method: 'POST',
 					success: function(res){
+
+						var score = res;
+						localStorage.score = score;
+
 						localStorage.removeItem('user_friend_answers');
-						$('#main-questions-wrapper').html(res);
+						window.location.href = APP_URL + '/result.php?uid='+user_id;
+
 
 					}
 				});

@@ -2,6 +2,7 @@
     
     require_once './includes/init.php'; 
 
+
     if(isset($_POST['submit'])){
         
         $name = escape_string($_POST['name']);
@@ -15,19 +16,23 @@
 
 
 
+
+
+
 ?>
 
 <!doctype html>
 <html class="no-js" lang="">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>2019 Friendship Dare</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?php require_once('./includes/meta-tags.php'); ?>
+        <script src="./js/app-url.js"></script>
+        <script>
 
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
-        <link rel="stylesheet" href="css/main.css">
+            if(localStorage.user_id){
+                window.location.href= APP_URL + '/share.php';
+            }
+
+        </script>
     </head>
     <body>
         <?php require_once('./includes/header.php'); ?>
@@ -39,7 +44,7 @@
 							<h4 class="text-center">2019 Friendship Dare</h4>
 							<br/>
 							<p style="color:#50596c; font-size:20px;"><b>Enter Your Name : </b></p>
-							<input type="text"  class="form-control" name="name" placeholder="Your name" value=""/>
+							<input type="text"  required class="form-control" name="name" placeholder="Your name" value=""/>
 							
 							<br/>
 							<input type="submit" class="btn btn-block btn-primary" id="start-button" name="submit" value="START">
@@ -50,11 +55,6 @@
 			
         </div>
 		<hr/>
-        <footer>
-        	<div class="text-center">
-        		<a href="contact.php">CONTACT US</a>
-        	</div>
-        	
-        </footer>
+        <?php require_once './includes/footer.php'; ?>
     </body>
 </html>
